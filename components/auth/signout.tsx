@@ -2,23 +2,16 @@
 
 import { Button } from "@/components/ui/button"
 import { signOut } from "@/lib/auth/actions"
-import { useToast } from "@/lib/hooks/use-toast"
 import { useAction } from "next-safe-action/hooks"
+import { toast } from "sonner"
 
 export function SignOut() {
-  const { toast } = useToast()
   const { execute, isExecuting } = useAction(signOut, {
     onSuccess() {
-      toast({
-        title: "Success",
-        description: "You have been successfully signed out",
-      })
+      toast.success("You have been successfully signed out")
     },
     onError() {
-      toast({
-        title: "Error",
-        description: "Failed to sign out.",
-      })
+      toast.error("Failed to sign out.")
     },
   })
   return (

@@ -21,7 +21,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useToast } from "@/lib/hooks/use-toast"
+import { toast } from "sonner"
 
 import { useAction } from "next-safe-action/hooks"
 import { parseActionError } from "@/lib/data/safe"
@@ -37,19 +37,12 @@ const defaultValues: Partial<values> = {
 }
 
 export function SignUpForm() {
-  const { toast } = useToast()
   const { execute, isExecuting } = useAction(signUp, {
     onSuccess() {
-      toast({
-        title: "Success",
-        description: "You have been successfully signed up",
-      })
+      toast.success("You have been successfully signed up")
     },
     onError({ error }) {
-      toast({
-        title: "Error",
-        description: parseActionError(error),
-      })
+      toast.error(parseActionError(error))
     },
   })
 
