@@ -6,6 +6,8 @@ import {
   session,
   account,
   organization as organizationSchema,
+  member,
+  invitation,
 } from "@/lib/db/schema"
 import { nextCookies } from "better-auth/next-js"
 import { admin, createAuthMiddleware, organization } from "better-auth/plugins"
@@ -18,7 +20,9 @@ export const auth = betterAuth({
       user,
       session,
       account,
+      member,
       organization: organizationSchema,
+      invitation,
     },
   }),
   emailAndPassword: {
