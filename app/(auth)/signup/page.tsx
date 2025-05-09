@@ -1,4 +1,5 @@
 import { SignUpForm } from "@/components/auth/signup-form"
+import { Main } from "@/components/ds"
 import { getSession } from "@/lib/auth/server"
 import { redirect } from "next/navigation"
 
@@ -9,8 +10,8 @@ export default async function Page() {
     redirect("/dashboard")
   }
   return (
-    <main className="p-20 flex justify-center items-center w-full">
+    <Main>
       <SignUpForm />
-    </main>
+    </Main>
   )
 }
