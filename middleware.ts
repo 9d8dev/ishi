@@ -11,10 +11,17 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/signin", request.url))
   }
 
+  if (request.nextUrl.pathname.startsWith("/admin")) {
+    const isAdmin = session.user.role === "admin"
+    if (!isAdmin) {
+      return NextResponse.redirect(new URL("/", request.url))
+    }
+  }
+
   return NextResponse.next()
 }
 
 export const config = {
   runtime: "nodejs",
-  matcher: ["/d"],
+  matcher: ["/d", "/d/:path*", "/admin", "/admin/:path*"],
 }
