@@ -18,7 +18,7 @@ export const signIn = actionClient
   .action(async ({ parsedInput }) => {
     const { email, password } = parsedInput
     await signInFunc(email, password)
-    redirect("/dashboard")
+    redirect("/d")
   })
 
 /**
@@ -31,7 +31,7 @@ export const signUp = actionClient
     const { name, email, password } = parsedInput
     await signUpFunc(name, email, password)
     await signInFunc(email, password)
-    redirect("/dashboard")
+    redirect("/d")
   })
 
 /**
