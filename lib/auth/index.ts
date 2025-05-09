@@ -11,7 +11,10 @@ import {
 } from "@/lib/db/schema"
 import { nextCookies } from "better-auth/next-js"
 import { admin, createAuthMiddleware, organization } from "better-auth/plugins"
-import { createOrganization } from "@/lib/data/organization"
+import {
+  createOrganization,
+  getActiveOrganization,
+} from "@/lib/data/organization"
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -43,6 +46,21 @@ export const auth = betterAuth({
         }
       }
     }),
+  },
+  databaseHooks: {
+    session: {
+      create: {
+        before: async (session) => {
+          const organization = await getActiveOrganization(session.userId)
+          return {
+            data: {
+              ...session,
+              activeOrganizationId: organization.slug,
+            },
+          }
+        },
+      },
+    },
   },
   plugins: [
     nextCookies(),
