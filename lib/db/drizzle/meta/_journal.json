@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1746767327517,
+      "tag": "0000_graceful_pestilence",
+      "breakpoints": true
+    }
+  ]
+}

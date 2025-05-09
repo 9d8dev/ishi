@@ -1,5 +1,4 @@
 import { SignUpForm } from "@/components/auth/signup-form"
-
 import { getSession } from "@/lib/auth/server"
 import { redirect } from "next/navigation"
 
