@@ -8,7 +8,8 @@ import {
   organization as organizationSchema,
 } from "@/lib/db/schema"
 import { nextCookies } from "better-auth/next-js"
-import { admin, organization } from "better-auth/plugins"
+import { admin, createAuthMiddleware, organization } from "better-auth/plugins"
+import { createOrganization } from "@/lib/data/organization"
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -29,5 +30,21 @@ export const auth = betterAuth({
       maxAge: 5 * 60,
     },
   },
-  plugins: [nextCookies(), admin(), organization()],
+  hooks: {
+    after: createAuthMiddleware(async (ctx) => {
+      if (ctx.path.startsWith("/sign-up")) {
+        const newSession = ctx.context.newSession
+        if (newSession) {
+          await createOrganization(newSession.user.id, newSession.user.email)
+        }
+      }
+    }),
+  },
+  plugins: [
+    nextCookies(),
+    admin(),
+    organization({
+      organizationLimit: 2,
+    }),
+  ],
 })

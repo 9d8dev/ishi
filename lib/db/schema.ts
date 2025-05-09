@@ -73,7 +73,7 @@ export const member = pgTable("member", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-  role: text("role").notNull(),
+  role: text("role").notNull(), // owner,admin, member, guest (owner by default)
   createdAt: timestamp("created_at").notNull(),
 })
 
