@@ -13,7 +13,15 @@ export const Header = () => {
       <Link href="/">
         <Logo />
       </Link>
-      <Button>Sign In</Button>
+
+      <div className="flex gap-2">
+        <Button variant="outline" asChild>
+          <Link href="/sign-in">Sign In</Link>
+        </Button>
+        <Button asChild>
+          <Link href="/sign-up">Sign Up</Link>
+        </Button>
+      </div>
     </Nav>
   );
 };
