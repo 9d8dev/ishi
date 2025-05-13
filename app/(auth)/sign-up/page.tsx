@@ -1,17 +1,13 @@
-import { SignUpForm } from "@/components/auth/signup-form"
-import { Main } from "@/components/ds"
-import { getSession } from "@/lib/auth/server"
-import { redirect } from "next/navigation"
+import { SignUpForm } from "@/components/auth/signup-form";
+
+import { getSession } from "@/lib/auth/server";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
-  const session = await getSession()
+  const session = await getSession();
 
   if (session) {
-    redirect("/d")
+    redirect("/d");
   }
-  return (
-    <Main>
-      <SignUpForm />
-    </Main>
-  )
+  return <SignUpForm />;
 }
