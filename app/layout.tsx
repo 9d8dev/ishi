@@ -1,4 +1,5 @@
 import { Geist as FontSans, Geist_Mono as FontMono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
@@ -31,7 +32,9 @@ export default function RootLayout({
         className={`${fontSans.variable} ${fontMono.variable} antialiased min-h-screen flex flex-col`}
       >
         {children}
+
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
