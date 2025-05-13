@@ -65,7 +65,7 @@ const ToDelete = () => {
         <h1 className="mt-8 text-4xl font-medium">
           Welcome to <span className="text-orange-500">Ishi</span>
         </h1>
-        <h3 className="mt-2 text-xl">
+        <h3 className="mt-2 text-xl text-balance">
           A{" "}
           <a className="text-orange-500" href="https://9d8.dev">
             9d8

@@ -5,7 +5,7 @@ export const Footer = () => {
   return (
     <footer>
       <Section className="border-t bg-muted">
-        <Container className="grid grid-cols-[auto_1fr_auto] items-center gap-6">
+        <Container className="grid sm:grid-cols-[auto_1fr_auto] items-center gap-3 sm:gap-6">
           <Logo />
           <p className="text-muted-foreground">
             Clone the Repo on{" "}
