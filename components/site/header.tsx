@@ -1,10 +1,15 @@
+import { SignOut } from "@/components/auth/signout";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/site/logo";
 import { Nav } from "@/components/ds";
 
 import Link from "next/link";
 
-export const Header = () => {
+import { getSession } from "@/lib/auth/server";
+
+export const Header = async () => {
+  const session = await getSession();
+
   return (
     <Nav
       className="border-b bg-muted sticky top-0 z-50"
@@ -12,12 +17,23 @@ export const Header = () => {
     >
       <Logo />
       <div className="flex gap-2">
-        <Button variant="outline" asChild>
-          <Link href="/sign-in">Sign In</Link>
-        </Button>
-        <Button asChild>
-          <Link href="/sign-up">Sign Up</Link>
-        </Button>
+        {!session ? (
+          <>
+            <Button variant="outline" asChild>
+              <Link href="/sign-in">Sign In</Link>
+            </Button>
+            <Button asChild>
+              <Link href="/sign-up">Sign Up</Link>
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button variant="outline" asChild>
+              <Link href="/admin">Admin</Link>
+            </Button>
+            <SignOut />
+          </>
+        )}
       </div>
     </Nav>
   );
