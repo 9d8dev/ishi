@@ -1,30 +1,57 @@
 import { Section, Container } from "@/components/ds";
 import { Badge } from "@/components/ui/badge";
-import { Trophy } from "lucide-react";
+import {
+  BarChart,
+  SquareChartGantt,
+  SquareUser,
+  Component,
+  FileCode2,
+  LineChart,
+} from "lucide-react";
+
+import Link from "next/link";
 
 export default function Page() {
   // Replace with your Homepage
   return <ToDelete />;
 }
 
-const Cards = [
+const features = [
   {
     name: "Admin Dashboard",
-    icon: Trophy,
-    href: "#",
-    description: "This is an example of a card",
+    icon: SquareChartGantt,
+    href: "/admin",
+    description: "Secure admin panel with role-based access control",
   },
   {
-    name: "User Authentication",
-    icon: Trophy,
-    href: "#",
-    description: "This is an example of a card",
+    name: "Authentication",
+    icon: SquareUser,
+    href: "/sign-in",
+    description: "Complete sign-in/sign-up flows with form validation",
   },
   {
-    name: "Cards",
-    icon: Trophy,
+    name: "Database Integration",
+    icon: BarChart,
+    href: "/sign-up",
+    description: "Drizzle ORM with NeonDB serverless Postgres",
+  },
+  {
+    name: "Modern UI Components",
+    icon: Component,
     href: "#",
-    description: "This is an example of a card",
+    description: "Shadcn UI and Radix primitives with Tailwind CSS",
+  },
+  {
+    name: "Type Safety",
+    icon: FileCode2,
+    href: "#",
+    description: "End-to-end TypeScript with Zod validation",
+  },
+  {
+    name: "Analytics",
+    icon: LineChart,
+    href: "#",
+    description: "Built-in Vercel Analytics for monitoring performance",
   },
 ];
 
@@ -46,13 +73,17 @@ const ToDelete = () => {
         </h3>
       </Container>
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {Cards.map((card) => (
-            <div key={card.name} className="bg-background border p-3 rounded">
-              <card.icon />
-              <h3 className="text-lg font-medium">{card.name}</h3>
-              <p className="mt-2 text-sm">{card.description}</p>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {features.map((feature) => (
+            <Link
+              key={feature.name}
+              href={feature.href}
+              className="bg-muted hover:bg-muted/50 transition-colors border p-4 rounded"
+            >
+              <feature.icon className="mb-6" />
+              <h3 className="text-lg font-medium">{feature.name}</h3>
+              <p className="mt-2 text-sm">{feature.description}</p>
+            </Link>
           ))}
         </div>
       </Container>
