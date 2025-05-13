@@ -39,7 +39,7 @@
   --font-sans: var(--font-inter), sans-serif;
   --font-serif: var(--font-merriweather), serif;
   --font-mono: var(--font-mono), monospace;
-  --radius: 0rem;
+  --radius: 0.4rem;
   --shadow-2xs: 0px 2px 3px 0px hsl(28 18% 25% / 0.09);
   --shadow-xs: 0px 2px 3px 0px hsl(28 18% 25% / 0.09);
   --shadow-sm: 0px 2px 3px 0px hsl(28 18% 25% / 0.18),
