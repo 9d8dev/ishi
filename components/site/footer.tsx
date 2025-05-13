@@ -7,7 +7,6 @@ export const Footer = () => {
       <Section className="border-t bg-muted">
         <Container className="grid grid-cols-[auto_1fr_auto] items-center gap-6">
           <Logo />
-
           <p className="text-muted-foreground">
             Clone the Repo on{" "}
             <a
@@ -18,7 +17,6 @@ export const Footer = () => {
             </a>
             .
           </p>
-
           <p>
             © {new Date().getFullYear()}{" "}
             <a className="underline underline-offset-2" href="https://9d8.dev">

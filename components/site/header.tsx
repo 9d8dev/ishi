@@ -10,10 +10,7 @@ export const Header = () => {
       className="border-b bg-muted sticky top-0 z-50"
       containerClassName="flex justify-between items-center"
     >
-      <Link href="/">
-        <Logo />
-      </Link>
-
+      <Logo />
       <div className="flex gap-2">
         <Button variant="outline" asChild>
           <Link href="/sign-in">Sign In</Link>
