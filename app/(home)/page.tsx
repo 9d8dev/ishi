@@ -66,10 +66,12 @@ const ToDelete = () => {
           Welcome to <span className="text-orange-500">Ishi</span>
         </h1>
         <h3 className="mt-2 text-xl">
-          A web app starter created at{" "}
+          A{" "}
           <a className="text-orange-500" href="https://9d8.dev">
             9d8
-          </a>
+          </a>{" "}
+          joint. Created by <a href="https://cameron.so">youngbloodcyb</a> and{" "}
+          <a href="https://bridger.to">brijr</a>.
         </h3>
       </Container>
       <Container>
