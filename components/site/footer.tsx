@@ -1,5 +1,5 @@
 import { Section, Container } from "@/components/ds";
-import { Logo } from "./logo";
+import { Logo } from "@/components/site/logo";
 
 export const Footer = () => {
   return (
