@@ -1,4 +1,4 @@
-import { Geist as FontSans, Geist_Mono as FontMono } from "next/font/google";
+import { Manrope as FontSans, Geist_Mono as FontMono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
 
