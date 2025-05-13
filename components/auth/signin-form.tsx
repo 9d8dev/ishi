@@ -52,15 +52,15 @@ export function SignInForm() {
   });
 
   return (
-    <Card className="w-[400px]">
+    <Card className="max-w-md w-full">
       <CardHeader>
         <CardTitle>Login</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent>
         <Form {...form}>
           <form
+            className="space-y-4"
             onSubmit={form.handleSubmit((values) => execute(values))}
-            className="space-y-8"
           >
             <FormField
               control={form.control}
@@ -94,12 +94,16 @@ export function SignInForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isExecuting}>
+            <Button
+              className="w-full mt-1"
+              type="submit"
+              disabled={isExecuting}
+            >
               Sign in
             </Button>
           </form>
         </Form>
-        <p>
+        <p className="mt-6 text-sm">
           Don&apos;t have an account?{" "}
           <Link href="/sign-up" className="underline">
             Sign up
