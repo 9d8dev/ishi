@@ -59,10 +59,10 @@ const ToDelete = () => {
   return (
     <Section>
       <Container>
-        <Badge variant="secondary" asChild>
+        <Badge variant="outline" asChild>
           <a href="https://github.com/9d8dev/ishi">Star on Github</a>
         </Badge>
-        <h1 className="mt-4 text-4xl font-medium">
+        <h1 className="mt-8 text-4xl font-medium">
           Welcome to <span className="text-orange-500">Ishi</span>
         </h1>
         <h3 className="mt-2 text-xl">
@@ -88,6 +88,18 @@ const ToDelete = () => {
             </Link>
           ))}
         </div>
+      </Container>
+      <Container>
+        <p className="text-muted-foreground">
+          <a
+            href="https://github.com/9d8dev/ishi"
+            className="underline underline-offset-2"
+          >
+            Star on Github
+          </a>{" "}
+          to show your support for this project. Oh and, Ishi means stone in
+          Japanese.
+        </p>
       </Container>
     </Section>
   );
