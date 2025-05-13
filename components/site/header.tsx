@@ -7,7 +7,7 @@ import Link from "next/link";
 export const Header = () => {
   return (
     <Nav
-      className="border-b bg-background sticky top-0 z-50"
+      className="border-b bg-muted sticky top-0 z-50"
       containerClassName="flex justify-between items-center"
     >
       <Link href="/">

@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   BarChart,
   SquareChartGantt,
-  SquareUser,
+  User2,
   Component,
   FileCode2,
   LineChart,
@@ -25,7 +25,7 @@ const features = [
   },
   {
     name: "Authentication",
-    icon: SquareUser,
+    icon: User2,
     href: "/sign-in",
     description: "Complete sign-in/sign-up flows with form validation",
   },
@@ -39,7 +39,7 @@ const features = [
     name: "Modern UI Components",
     icon: Component,
     href: "#",
-    description: "Shadcn UI and Radix primitives with Tailwind CSS",
+    description: "Shadcn UI and Craft Design System built on Tailwind CSS",
   },
   {
     name: "Type Safety",
