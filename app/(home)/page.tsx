@@ -1,14 +1,21 @@
-import { Section, Container } from "@/components/ds";
+import { Section, Container, Prose } from "@/components/ds";
 
 export default function Page() {
-  return (
-    <>
-      <Section>
-        <Container>
-          <h1>Hello, Craft!</h1>
-          <p className="font-mono">This is a monospace font</p>
-        </Container>
-      </Section>
-    </>
-  );
+  // Replace with your Homepage
+  return <ToDelete />;
 }
+
+const ToDelete = () => {
+  return (
+    <Section>
+      <Container>
+        <Prose isSpaced>
+          <h1>Welcome to Ishi</h1>
+          <h3>
+            A web app starter created at <a href="https://9d8.dev">9d8</a>
+          </h3>
+        </Prose>
+      </Container>
+    </Section>
+  );
+};
