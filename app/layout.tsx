@@ -1,36 +1,36 @@
-import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
-import { Toaster } from "@/components/ui/sonner"
-import "./globals.css"
+import { Geist as FontSans, Geist_Mono as FontMono } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-})
+import "./globals.css";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+import type { Metadata } from "next";
+
+const fontSans = FontSans({
   subsets: ["latin"],
-})
+  variable: "--font-sans",
+});
+
+const fontMono = FontMono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "ishi",
   description: "web app starter",
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${fontSans.variable} ${fontMono.variable} antialiased`}>
         {children}
         <Toaster />
       </body>
     </html>
-  )
+  );
 }
