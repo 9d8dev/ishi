@@ -5,6 +5,7 @@ import { BanUserButton } from "@/components/models/users/ban-button"
 import { DemoteUserButton } from "@/components/models/users/demote-button"
 import { UnbanUserButton } from "@/components/models/users/unban-button"
 import { RevokeSessionsButton } from "@/components/models/users/revoke-button"
+import { ActionsMenu } from "@/components/models/users/actions-menu"
 import {
   Table,
   TableBody,
@@ -33,7 +34,7 @@ export default async function Page() {
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>
-                <DeleteUserButton id={user.id} />
+                {/* <DeleteUserButton id={user.id} />
                 {user.banned ? (
                   <UnbanUserButton id={user.id} />
                 ) : (
@@ -44,7 +45,8 @@ export default async function Page() {
                 ) : (
                   <PromoteUserButton id={user.id} />
                 )}
-                <RevokeSessionsButton id={user.id} />
+                <RevokeSessionsButton id={user.id} /> */}
+                <ActionsMenu user={user} />
               </TableCell>
             </TableRow>
           ))}
