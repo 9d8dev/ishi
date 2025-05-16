@@ -8,6 +8,7 @@ import { adminUserActionSchema } from "@/lib/data/validation"
 import { eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import { auth } from "@/lib/auth"
+import { headers } from "next/headers"
 
 export const getUsers = async () => {
   const session = await getSession()
@@ -26,43 +27,79 @@ export const getUsers = async () => {
 export const deleteUser = adminAction
   .schema(adminUserActionSchema)
   .action(async ({ parsedInput }) => {
-    await db.delete(user).where(eq(user.id, parsedInput.id))
-    revalidatePath("/admin/users")
+    try {
+      await db.delete(user).where(eq(user.id, parsedInput.id))
+      revalidatePath("/admin/users")
+    } catch (error) {
+      console.error(error)
+    }
   })
 
 export const banUser = adminAction
   .schema(adminUserActionSchema)
   .action(async ({ parsedInput }) => {
-    await auth.api.banUser({
-      body: {
-        userId: parsedInput.id,
-      },
-    })
+    try {
+      const headersList = await headers()
+      const usableHeaders = Object.fromEntries(headersList.entries())
+
+      await auth.api.banUser({
+        headers: usableHeaders,
+        body: {
+          userId: parsedInput.id,
+        },
+      })
+    } catch (error) {
+      console.error(error)
+    }
   })
 
 export const unbanUser = adminAction
   .schema(adminUserActionSchema)
   .action(async ({ parsedInput }) => {
-    await auth.api.unbanUser({
-      body: { userId: parsedInput.id },
-    })
+    try {
+      const headersList = await headers()
+      const usableHeaders = Object.fromEntries(headersList.entries())
+
+      await auth.api.unbanUser({
+        headers: usableHeaders,
+        body: { userId: parsedInput.id },
+      })
+    } catch (error) {
+      console.error(error)
+    }
   })
 
 export const promoteUser = adminAction
   .schema(adminUserActionSchema)
   .action(async ({ parsedInput }) => {
-    await auth.api.setRole({
-      body: {
-        userId: parsedInput.id,
-        role: "admin",
-      },
-    })
+    try {
+      const headersList = await headers()
+      const usableHeaders = Object.fromEntries(headersList.entries())
+
+      await auth.api.setRole({
+        headers: usableHeaders,
+        body: {
+          userId: parsedInput.id,
+          role: "admin",
+        },
+      })
+    } catch (error) {
+      console.error(error)
+    }
   })
 
 export const demoteUser = adminAction
   .schema(adminUserActionSchema)
   .action(async ({ parsedInput }) => {
-    await auth.api.setRole({
-      body: { userId: parsedInput.id, role: "user" },
-    })
+    try {
+      const headersList = await headers()
+      const usableHeaders = Object.fromEntries(headersList.entries())
+
+      await auth.api.setRole({
+        headers: usableHeaders,
+        body: { userId: parsedInput.id, role: "user" },
+      })
+    } catch (error) {
+      console.error(error)
+    }
   })
