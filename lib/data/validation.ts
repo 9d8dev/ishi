@@ -15,6 +15,6 @@ export const signUpSchema = z.object({
  * User actions
  */
 
-export const deleteUserSchema = z.object({
+export const adminUserActionSchema = z.object({
   id: z.string(),
 })
