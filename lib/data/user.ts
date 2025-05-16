@@ -129,3 +129,32 @@ export const revokeSessions = adminAction
       console.error(error)
     }
   })
+
+export const impersonateUser = adminAction
+  .schema(adminUserActionSchema)
+  .action(async ({ parsedInput }) => {
+    try {
+      const headersList = await headers()
+      const usableHeaders = Object.fromEntries(headersList.entries())
+
+      await auth.api.impersonateUser({
+        headers: usableHeaders,
+        body: { userId: parsedInput.id },
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  })
+
+export const stopImpersonatingUser = adminAction.action(async () => {
+  try {
+    const headersList = await headers()
+    const usableHeaders = Object.fromEntries(headersList.entries())
+
+    await auth.api.stopImpersonating({
+      headers: usableHeaders,
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
