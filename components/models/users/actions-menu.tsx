@@ -35,6 +35,13 @@ import { useAction } from "next-safe-action/hooks"
 import { toast } from "sonner"
 import { parseActionError } from "@/lib/data/safe"
 
+type ActionStates = {
+  [K in (typeof actions)[number]["label"]]: {
+    execute: (input: { id: string }) => void | Promise<void>
+    isExecuting: boolean
+  }
+}
+
 const actions = [
   {
     label: "Ban",
@@ -113,7 +120,7 @@ export function ActionsMenu({ user }: { user: User }) {
   })
 
   // Create a dynamic object of action hooks
-  const actionStates = filteredActions.reduce((acc, action) => {
+  const actionStates = filteredActions.reduce<ActionStates>((acc, action) => {
     const { execute, isExecuting } = useAction(action.action, {
       onSuccess() {
         toast.success(action.successLabel)
@@ -130,7 +137,7 @@ export function ActionsMenu({ user }: { user: User }) {
         isExecuting,
       },
     }
-  }, {})
+  }, {} as Record<(typeof actions)[number]["label"], { execute: (input: { id: string }) => void | Promise<void>; isExecuting: boolean }>)
 
   return (
     <DropdownMenu>
