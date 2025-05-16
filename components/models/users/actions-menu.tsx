@@ -29,6 +29,7 @@ import {
   impersonateUser,
   promoteUser,
   revokeSessions,
+  stopImpersonatingUser,
   unbanUser,
 } from "@/lib/data/user"
 import { useAction } from "next-safe-action/hooks"
@@ -62,15 +63,25 @@ const actions = [
     executingLabel: "Unbanning...",
     successLabel: "User unbanned successfully",
   },
-  {
-    label: "Impersonate",
-    action: impersonateUser,
-    title: "Impersonate user?",
-    description: "This action will impersonate the user.",
-    buttonLabel: "Impersonate User",
-    executingLabel: "Impersonating...",
-    successLabel: "Impersonated successfully",
-  },
+  // TODO: Add impersonate and stop impersonate actions
+  // {
+  //   label: "Impersonate",
+  //   action: impersonateUser,
+  //   title: "Impersonate user?",
+  //   description: "This action will impersonate the user.",
+  //   buttonLabel: "Impersonate User",
+  //   executingLabel: "Impersonating...",
+  //   successLabel: "Impersonated successfully",
+  // },
+  // {
+  //   label: "Stop Impersonating",
+  //   action: stopImpersonatingUser,
+  //   title: "Stop impersonating?",
+  //   description: "This action will stop impersonating the user.",
+  //   buttonLabel: "Stop Impersonating",
+  //   executingLabel: "Stopping impersonation...",
+  //   successLabel: "Impersonation stopped successfully",
+  // },
   {
     label: "Revoke Sessions",
     action: revokeSessions,

@@ -146,15 +146,17 @@ export const impersonateUser = adminAction
     }
   })
 
-export const stopImpersonatingUser = adminAction.action(async () => {
-  try {
-    const headersList = await headers()
-    const usableHeaders = Object.fromEntries(headersList.entries())
+export const stopImpersonatingUser = adminAction
+  .schema(adminUserActionSchema)
+  .action(async () => {
+    try {
+      const headersList = await headers()
+      const usableHeaders = Object.fromEntries(headersList.entries())
 
-    await auth.api.stopImpersonating({
-      headers: usableHeaders,
-    })
-  } catch (error) {
-    console.error(error)
-  }
-})
+      await auth.api.stopImpersonating({
+        headers: usableHeaders,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  })
