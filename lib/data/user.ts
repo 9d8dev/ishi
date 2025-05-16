@@ -48,6 +48,8 @@ export const banUser = adminAction
           userId: parsedInput.id,
         },
       })
+
+      revalidatePath("/admin/users")
     } catch (error) {
       console.error(error)
     }
@@ -64,6 +66,8 @@ export const unbanUser = adminAction
         headers: usableHeaders,
         body: { userId: parsedInput.id },
       })
+
+      revalidatePath("/admin/users")
     } catch (error) {
       console.error(error)
     }
@@ -83,6 +87,8 @@ export const promoteUser = adminAction
           role: "admin",
         },
       })
+
+      revalidatePath("/admin/users")
     } catch (error) {
       console.error(error)
     }
@@ -99,6 +105,8 @@ export const demoteUser = adminAction
         headers: usableHeaders,
         body: { userId: parsedInput.id, role: "user" },
       })
+
+      revalidatePath("/admin/users")
     } catch (error) {
       console.error(error)
     }
