@@ -10,3 +10,11 @@ export const signUpSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 })
+
+/**
+ * User actions
+ */
+
+export const deleteUserSchema = z.object({
+  id: z.string(),
+})

@@ -1,5 +1,5 @@
 import { getUsers } from "@/lib/data/user"
-
+import { DeleteUserButton } from "@/components/models/users/delete-button"
 export default async function Page() {
   const users = await getUsers()
 
@@ -11,6 +11,7 @@ export default async function Page() {
           <div className="inline-flex gap-2">
             <h2>{user.name}</h2>
             <p>{user.email}</p>
+            <DeleteUserButton id={user.id} />
           </div>
         </div>
       ))}
