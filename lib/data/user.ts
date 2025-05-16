@@ -111,3 +111,21 @@ export const demoteUser = adminAction
       console.error(error)
     }
   })
+
+export const revokeSessions = adminAction
+  .schema(adminUserActionSchema)
+  .action(async ({ parsedInput }) => {
+    try {
+      const headersList = await headers()
+      const usableHeaders = Object.fromEntries(headersList.entries())
+
+      await auth.api.revokeUserSessions({
+        headers: usableHeaders,
+        body: { userId: parsedInput.id },
+      })
+
+      revalidatePath("/admin/users")
+    } catch (error) {
+      console.error(error)
+    }
+  })

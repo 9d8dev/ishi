@@ -4,6 +4,7 @@ import { PromoteUserButton } from "@/components/models/users/promote-button"
 import { BanUserButton } from "@/components/models/users/ban-button"
 import { DemoteUserButton } from "@/components/models/users/demote-button"
 import { UnbanUserButton } from "@/components/models/users/unban-button"
+import { RevokeSessionsButton } from "@/components/models/users/revoke-button"
 import {
   Table,
   TableBody,
@@ -43,6 +44,7 @@ export default async function Page() {
                 ) : (
                   <PromoteUserButton id={user.id} />
                 )}
+                <RevokeSessionsButton id={user.id} />
               </TableCell>
             </TableRow>
           ))}
