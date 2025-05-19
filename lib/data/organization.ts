@@ -3,13 +3,30 @@ import { member, organization } from "@/lib/db/schema"
 import { db } from "@/lib/db"
 import { eq } from "drizzle-orm"
 import { getSession } from "@/lib/auth/server"
+import { adminAction } from "./safe"
+import { adminOrganizationActionSchema } from "./validation"
+import { headers } from "next/headers"
+import { revalidatePath } from "next/cache"
 
 export const createOrganization = async (userId: string, email: string) => {
   try {
+    const name = `${email.split("@")[0]}'s Organization`
+    const slug = email.split("@")[0]
+
+    const slugExists = await auth.api.checkOrganizationSlug({
+      body: {
+        slug,
+      },
+    })
+
+    if (slugExists) {
+      throw new Error("Organization slug already exists")
+    }
+
     await auth.api.createOrganization({
       body: {
-        name: `${email.split("@")[0]}'s Organization`,
-        slug: email.split("@")[0],
+        name,
+        slug,
         userId,
       },
     })
@@ -42,3 +59,19 @@ export const getOrganizations = async () => {
   const orgs = await db.select().from(organization)
   return orgs
 }
+
+export const deleteOrganization = adminAction
+  .schema(adminOrganizationActionSchema)
+  .action(async ({ parsedInput }) => {
+    const headersList = await headers()
+    const usableHeaders = Object.fromEntries(headersList.entries())
+
+    await auth.api.deleteOrganization({
+      headers: usableHeaders,
+      body: {
+        organizationId: parsedInput.id,
+      },
+    })
+
+    revalidatePath("/admin/organizations")
+  })

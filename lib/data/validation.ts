@@ -18,3 +18,11 @@ export const signUpSchema = z.object({
 export const adminUserActionSchema = z.object({
   id: z.string(),
 })
+
+/**
+ * Organization actions
+ */
+
+export const adminOrganizationActionSchema = z.object({
+  id: z.string(),
+})
