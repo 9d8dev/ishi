@@ -1,6 +1,7 @@
 import { Main, Section, Container } from "@/components/ds"
 import { getSession } from "@/lib/auth/server"
 import { getOrganization } from "@/lib/data/organization"
+import { InviteUserForm } from "@/components/models/organizations/invite-user-form"
 
 export default async function Page() {
   const session = await getSession()
@@ -22,25 +23,7 @@ export default async function Page() {
                   <h3 className="text-lg font-semibold">
                     Members ({organization.members.length})
                   </h3>
-                  <button className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                      <circle cx="9" cy="7" r="4" />
-                      <line x1="19" y1="8" x2="19" y2="14" />
-                      <line x1="22" y1="11" x2="16" y2="11" />
-                    </svg>
-                    Invite User
-                  </button>
+                  <InviteUserForm organizationId={organization.id} />
                 </div>
                 <div className="divide-y">
                   {organization.members.map((member) => (
