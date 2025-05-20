@@ -12,7 +12,8 @@ import {
 } from "./validation"
 import { headers } from "next/headers"
 import { revalidatePath } from "next/cache"
-
+import { resend } from "@/lib/resend"
+import { EmailInviteTemplate } from "@/components/email/invite"
 export const createOrganization = async (userId: string, email: string) => {
   try {
     const name = `${email.split("@")[0]}'s Organization`
@@ -148,4 +149,32 @@ export const testPermission = async () => {
   })
 
   return hasPermission
+}
+
+export const sendInvitationEmail = async ({
+  email,
+  invitedBy,
+  teamName,
+  inviteLink,
+}: {
+  email: string
+  invitedBy: string
+  teamName: string
+  inviteLink: string
+}) => {
+  const { data, error } = await resend.emails.send({
+    from: "9d8 <info@9d8.site>",
+    to: [email],
+    subject: "You've been invited to join a team on ishi.dev",
+    react: await EmailInviteTemplate({
+      email,
+      invitedBy,
+      teamName,
+      inviteLink,
+    }),
+  })
+  if (error) {
+    console.error(error)
+  }
+  return data
 }

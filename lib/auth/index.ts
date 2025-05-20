@@ -11,7 +11,10 @@ import {
 } from "@/lib/db/schema"
 import { nextCookies } from "better-auth/next-js"
 import { admin, createAuthMiddleware, organization } from "better-auth/plugins"
-import { createOrganization } from "@/lib/data/organization"
+import {
+  createOrganization,
+  sendInvitationEmail,
+} from "@/lib/data/organization"
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -51,6 +54,15 @@ export const auth = betterAuth({
     admin(),
     organization({
       organizationLimit: 2,
+      async sendInvitationEmail(data) {
+        const inviteLink = `${process.env.NEXT_PUBLIC_URL}/invitation/${data.id}`
+        await sendInvitationEmail({
+          email: data.email,
+          invitedBy: data.inviter.user.email,
+          teamName: data.organization.name,
+          inviteLink,
+        })
+      },
     }),
   ],
 })
