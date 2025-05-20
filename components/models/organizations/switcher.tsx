@@ -19,7 +19,6 @@ export const OrganizationSwitcher = ({
   organizations: Organization[]
   activeOrganization: string
 }) => {
-  console.log("activeOrganization", activeOrganization)
   const { execute, isExecuting } = useAction(setActiveOrganization, {
     onSuccess: () => {
       toast.success("Organization set")
