@@ -44,6 +44,24 @@ export const getActiveOrganization = async (userId: string) => {
   return org.organization
 }
 
+export const getOrganization = async (organizationId?: string | null) => {
+  if (!organizationId) {
+    return null
+  }
+
+  const headersList = await headers()
+  const usableHeaders = Object.fromEntries(headersList.entries())
+
+  const org = await auth.api.getFullOrganization({
+    headers: usableHeaders,
+    query: {
+      organizationId,
+    },
+  })
+
+  return org
+}
+
 export const getOrganizations = async () => {
   const session = await getSession()
   if (!session) {
