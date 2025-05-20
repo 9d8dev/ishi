@@ -12,8 +12,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/sign-in", request.url))
   }
 
-  // if no active organization, redirect to workspace
-  if (!session.session.activeOrganizationId) {
+  // if no active organization and not already on workspace, redirect to workspace
+  if (
+    session &&
+    !session.session.activeOrganizationId &&
+    request.nextUrl.pathname !== "/workspace"
+  ) {
     return NextResponse.redirect(new URL("/workspace", request.url))
   }
 
@@ -30,5 +34,5 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   runtime: "nodejs",
-  matcher: ["/d", "/d/:path*", "/admin", "/admin/:path*"],
+  matcher: ["/workspace", "/workspace/:path*", "/admin", "/admin/:path*"],
 }
