@@ -26,3 +26,7 @@ export const adminUserActionSchema = z.object({
 export const adminOrganizationActionSchema = z.object({
   id: z.string(),
 })
+
+export const authenticatedOrganizationActionSchema = z.object({
+  id: z.string(),
+})

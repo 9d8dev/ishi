@@ -28,12 +28,14 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  session: {
-    cookieCache: {
-      enabled: true,
-      maxAge: 5 * 60,
-    },
-  },
+  // If this is enabled, the session is cached in the cookie
+  // TODO: find a way to revalidate the session when the organization is changed without signing out
+  // session: {
+  //   cookieCache: {
+  //     enabled: true,
+  //     maxAge: 5 * 60,
+  //   },
+  // },
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
       if (ctx.path.startsWith("/sign-up")) {

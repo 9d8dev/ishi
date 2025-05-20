@@ -1,10 +1,15 @@
+"use server"
+
 import { auth } from "@/lib/auth"
 import { member, organization } from "@/lib/db/schema"
 import { db } from "@/lib/db"
 import { eq } from "drizzle-orm"
 import { getSession } from "@/lib/auth/server"
-import { adminAction } from "./safe"
-import { adminOrganizationActionSchema } from "./validation"
+import { adminAction, authenticatedAction } from "./safe"
+import {
+  adminOrganizationActionSchema,
+  authenticatedOrganizationActionSchema,
+} from "./validation"
 import { headers } from "next/headers"
 import { revalidatePath } from "next/cache"
 
@@ -67,4 +72,20 @@ export const deleteOrganization = adminAction
     })
 
     revalidatePath("/admin/organizations")
+  })
+
+export const setActiveOrganization = authenticatedAction
+  .schema(authenticatedOrganizationActionSchema)
+  .action(async ({ parsedInput }) => {
+    const headersList = await headers()
+    const usableHeaders = Object.fromEntries(headersList.entries())
+
+    await auth.api.setActiveOrganization({
+      headers: usableHeaders,
+      body: {
+        organizationId: parsedInput.id,
+      },
+    })
+
+    revalidatePath("/d")
   })
