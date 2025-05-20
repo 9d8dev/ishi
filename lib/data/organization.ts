@@ -13,21 +13,14 @@ export const createOrganization = async (userId: string, email: string) => {
     const name = `${email.split("@")[0]}'s Organization`
     const slug = email.split("@")[0]
 
-    const slugExists = await auth.api.checkOrganizationSlug({
-      body: {
-        slug,
-      },
-    })
-
-    if (slugExists) {
-      throw new Error("Organization slug already exists")
-    }
-
     await auth.api.createOrganization({
       body: {
         name,
         slug,
         userId,
+        metadata: {
+          ownedBy: userId,
+        },
       },
     })
   } catch (error) {
