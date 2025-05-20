@@ -9,11 +9,13 @@ import { adminAction, authenticatedAction } from "./safe"
 import {
   adminOrganizationActionSchema,
   authenticatedOrganizationActionSchema,
+  inviteUserSchema,
 } from "./validation"
 import { headers } from "next/headers"
 import { revalidatePath } from "next/cache"
 import { resend } from "@/lib/resend"
 import { EmailInviteTemplate } from "@/components/email/invite"
+
 export const createOrganization = async (userId: string, email: string) => {
   try {
     const name = `${email.split("@")[0]}'s Organization`
@@ -106,7 +108,7 @@ export const setActiveOrganization = authenticatedAction
       },
     })
 
-    revalidatePath("/d")
+    revalidatePath("/workspace")
   })
 
 export const getOrganizationUsers = async (organizationId: string) => {
@@ -178,3 +180,21 @@ export const sendInvitationEmail = async ({
   }
   return data
 }
+
+export const inviteUser = authenticatedAction
+  .schema(inviteUserSchema)
+  .action(async ({ parsedInput }) => {
+    const headersList = await headers()
+    const usableHeaders = Object.fromEntries(headersList.entries())
+
+    await auth.api.createInvitation({
+      headers: usableHeaders,
+      body: {
+        organizationId: parsedInput.organizationId,
+        email: parsedInput.email,
+        role: parsedInput.role,
+      },
+    })
+
+    revalidatePath("/workspace/settings")
+  })

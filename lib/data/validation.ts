@@ -30,3 +30,9 @@ export const adminOrganizationActionSchema = z.object({
 export const authenticatedOrganizationActionSchema = z.object({
   id: z.string(),
 })
+
+export const inviteUserSchema = z.object({
+  email: z.string().email(),
+  role: z.enum(["owner", "admin", "member"]),
+  organizationId: z.string(),
+})
