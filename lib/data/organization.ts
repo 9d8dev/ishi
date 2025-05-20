@@ -89,6 +89,7 @@ export const setActiveOrganization = authenticatedAction
 
     revalidatePath("/d")
   })
+
 export const getOrganizationUsers = async (organizationId: string) => {
   const session = await getSession()
   if (!session) {
@@ -113,4 +114,20 @@ export const getOrganizationUsers = async (organizationId: string) => {
     .innerJoin(member, eq(member.userId, user.id))
     .where(eq(member.organizationId, organizationId))
   return users
+}
+
+export const testPermission = async () => {
+  const headersList = await headers()
+  const usableHeaders = Object.fromEntries(headersList.entries())
+
+  const hasPermission = await auth.api.hasPermission({
+    headers: usableHeaders,
+    body: {
+      permissions: {
+        organization: ["update"],
+      },
+    },
+  })
+
+  return hasPermission
 }
