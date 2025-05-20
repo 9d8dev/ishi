@@ -1,7 +1,7 @@
 "use server"
 
 import { auth } from "@/lib/auth"
-import { member, organization } from "@/lib/db/schema"
+import { member, organization, user } from "@/lib/db/schema"
 import { db } from "@/lib/db"
 import { eq } from "drizzle-orm"
 import { getSession } from "@/lib/auth/server"
@@ -89,3 +89,28 @@ export const setActiveOrganization = authenticatedAction
 
     revalidatePath("/d")
   })
+export const getOrganizationUsers = async (organizationId: string) => {
+  const session = await getSession()
+  if (!session) {
+    throw new Error("Unauthenticated")
+  }
+
+  const users = await db
+    .select({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      emailVerified: user.emailVerified,
+      image: user.image,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      role: user.role,
+      banned: user.banned,
+      banReason: user.banReason,
+      banExpires: user.banExpires,
+    })
+    .from(user)
+    .innerJoin(member, eq(member.userId, user.id))
+    .where(eq(member.organizationId, organizationId))
+  return users
+}
