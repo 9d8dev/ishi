@@ -10,6 +10,8 @@ export default async function Page() {
     session?.session.activeOrganizationId
   )
 
+  console.log(organization)
+
   return (
     <Main>
       <Section>
@@ -70,7 +72,7 @@ export default async function Page() {
                 <div className="rounded-lg border bg-card">
                   <div className="border-b p-4">
                     <h3 className="text-lg font-semibold">
-                      Pending Invitations ({organization.invitations.length})
+                      Invitations ({organization.invitations.length})
                     </h3>
                   </div>
                   <div className="divide-y">
@@ -82,15 +84,20 @@ export default async function Page() {
                         <div>
                           <p className="font-medium">{invitation.email}</p>
                           <p className="text-sm text-muted-foreground">
+                            Status: {invitation.status}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
                             Expires{" "}
                             {new Date(
                               invitation.expiresAt
                             ).toLocaleDateString()}
                           </p>
                         </div>
-                        <button className="text-sm text-destructive hover:underline">
-                          Cancel Invitation
-                        </button>
+                        {invitation.status === "pending" && (
+                          <button className="text-sm text-destructive hover:underline">
+                            Cancel Invitation
+                          </button>
+                        )}
                       </div>
                     ))}
                   </div>
