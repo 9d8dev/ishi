@@ -16,7 +16,8 @@ export async function middleware(request: NextRequest) {
   if (
     session &&
     !session.session.activeOrganizationId &&
-    request.nextUrl.pathname !== "/workspace"
+    request.nextUrl.pathname !== "/workspace" &&
+    !request.nextUrl.pathname.startsWith("/invitation")
   ) {
     return NextResponse.redirect(new URL("/workspace", request.url))
   }
@@ -34,5 +35,11 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   runtime: "nodejs",
-  matcher: ["/workspace", "/workspace/:path*", "/admin", "/admin/:path*"],
+  matcher: [
+    "/workspace",
+    "/workspace/:path*",
+    "/admin",
+    "/admin/:path*",
+    "/invitation/:path*",
+  ],
 }

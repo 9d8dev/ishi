@@ -36,3 +36,7 @@ export const inviteUserSchema = z.object({
   role: z.enum(["owner", "admin", "member"]),
   organizationId: z.string(),
 })
+
+export const acceptInvitationSchema = z.object({
+  id: z.string(),
+})

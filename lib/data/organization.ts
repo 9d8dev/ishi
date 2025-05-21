@@ -10,11 +10,13 @@ import {
   adminOrganizationActionSchema,
   authenticatedOrganizationActionSchema,
   inviteUserSchema,
+  acceptInvitationSchema,
 } from "./validation"
 import { headers } from "next/headers"
 import { revalidatePath } from "next/cache"
 import { resend } from "@/lib/resend"
 import { EmailInviteTemplate } from "@/components/email/invite"
+import { redirect } from "next/navigation"
 
 export const createOrganization = async (userId: string, email: string) => {
   try {
@@ -181,6 +183,29 @@ export const sendInvitationEmail = async ({
   return data
 }
 
+export const getInvitation = async (id: string) => {
+  try {
+    const session = await getSession()
+    if (!session) {
+      throw new Error("Unauthenticated")
+    }
+
+    const headersList = await headers()
+    const usableHeaders = Object.fromEntries(headersList.entries())
+
+    const invitation = await auth.api.getInvitation({
+      headers: usableHeaders,
+      query: {
+        id,
+      },
+    })
+
+    return invitation
+  } catch (error) {
+    return null
+  }
+}
+
 export const inviteUser = authenticatedAction
   .schema(inviteUserSchema)
   .action(async ({ parsedInput }) => {
@@ -197,4 +222,38 @@ export const inviteUser = authenticatedAction
     })
 
     revalidatePath("/workspace/settings")
+  })
+
+export const acceptInvitation = authenticatedAction
+  .schema(acceptInvitationSchema)
+  .action(async ({ parsedInput }) => {
+    const headersList = await headers()
+    const usableHeaders = Object.fromEntries(headersList.entries())
+
+    await auth.api.acceptInvitation({
+      headers: usableHeaders,
+      body: {
+        invitationId: parsedInput.id,
+      },
+    })
+
+    revalidatePath("/workspace")
+    redirect("/workspace")
+  })
+
+export const rejectInvitation = authenticatedAction
+  .schema(acceptInvitationSchema)
+  .action(async ({ parsedInput }) => {
+    const headersList = await headers()
+    const usableHeaders = Object.fromEntries(headersList.entries())
+
+    await auth.api.rejectInvitation({
+      headers: usableHeaders,
+      body: {
+        invitationId: parsedInput.id,
+      },
+    })
+
+    revalidatePath("/workspace")
+    redirect("/workspace")
   })
