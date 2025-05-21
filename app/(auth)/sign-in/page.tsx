@@ -1,14 +1,14 @@
-import { SignInForm } from "@/components/auth/signin-form";
+import { SignInForm } from "@/components/auth/signin-form"
 
-import { getSession } from "@/lib/auth/server";
-import { redirect } from "next/navigation";
+import { getSession } from "@/lib/auth/server"
+import { redirect } from "next/navigation"
 
 export default async function Page() {
-  const session = await getSession();
+  const session = await getSession()
 
   if (session) {
-    redirect("/d");
+    redirect("/workspace")
   }
 
-  return <SignInForm />;
+  return <SignInForm />
 }
