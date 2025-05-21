@@ -15,7 +15,11 @@ import { notFound } from "next/navigation"
 import { AcceptInvitation } from "@/components/models/organizations/accept-invitation"
 import { RejectInvitation } from "@/components/models/organizations/reject-invitation"
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
   const usableParams = await params
   const { id } = usableParams
 
