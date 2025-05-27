@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useAction } from "next-safe-action/hooks"
 import { rejectInvitation } from "@/lib/data/organization"
 import { toast } from "sonner"
-import { parseActionError } from "@/lib/data/safe"
+import { parseActionError } from "@/lib/data/utils"
 
 export function RejectInvitation({ id }: { id: string }) {
   const { execute, isExecuting } = useAction(rejectInvitation, {

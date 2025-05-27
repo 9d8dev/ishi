@@ -1,6 +1,6 @@
 "use server"
 
-import { actionClient } from "@/lib/data/safe"
+import { actionClient } from "@/lib/data/utils"
 import {
   signIn as signInFunc,
   signUp as signUpFunc,

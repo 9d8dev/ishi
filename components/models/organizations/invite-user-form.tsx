@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/select"
 
 import { useAction } from "next-safe-action/hooks"
-import { parseActionError } from "@/lib/data/safe"
+import { parseActionError } from "@/lib/data/utils"
 import { inviteUser } from "@/lib/data/organization"
 
 type values = z.infer<typeof formSchema>
@@ -41,10 +41,10 @@ const defaultValues: Partial<values> = {
   organizationId: "",
 }
 
-export function InviteUserForm({ 
-  organizationId, 
-  onSuccess 
-}: { 
+export function InviteUserForm({
+  organizationId,
+  onSuccess,
+}: {
   organizationId: string
   onSuccess?: () => void
 }) {

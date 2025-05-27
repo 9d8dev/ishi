@@ -1,12 +1,12 @@
-"use client";
+"use client"
 
-import * as React from "react";
+import * as React from "react"
 
 // type imports
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { signInSchema as formSchema } from "@/lib/data/validation";
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import { useForm } from "react-hook-form"
+import { signInSchema as formSchema } from "@/lib/data/validation"
 
 // UI Imports
 import {
@@ -17,39 +17,39 @@ import {
   FormLabel,
   FormMessage,
   FormDescription,
-} from "@/components/ui/form";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
+} from "@/components/ui/form"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { toast } from "sonner"
 
-import { useAction } from "next-safe-action/hooks";
-import { parseActionError } from "@/lib/data/safe";
-import { signIn } from "@/lib/auth/actions";
-import Link from "next/link";
+import { useAction } from "next-safe-action/hooks"
+import { parseActionError } from "@/lib/data/utils"
+import { signIn } from "@/lib/auth/actions"
+import Link from "next/link"
 
-type values = z.infer<typeof formSchema>;
+type values = z.infer<typeof formSchema>
 
 const defaultValues: Partial<values> = {
   email: "",
   password: "",
-};
+}
 
 export function SignInForm() {
   const { execute, isExecuting } = useAction(signIn, {
     onSuccess() {
-      toast.success("You have been successfully logged in");
+      toast.success("You have been successfully logged in")
     },
     onError({ error }) {
-      toast.error(parseActionError(error));
+      toast.error(parseActionError(error))
     },
-  });
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
     mode: "onChange",
-  });
+  })
 
   return (
     <Card className="max-w-md w-full">
@@ -111,5 +111,5 @@ export function SignInForm() {
         </p>
       </CardContent>
     </Card>
-  );
+  )
 }

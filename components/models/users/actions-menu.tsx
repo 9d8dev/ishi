@@ -34,7 +34,7 @@ import {
 } from "@/lib/data/user"
 import { useAction } from "next-safe-action/hooks"
 import { toast } from "sonner"
-import { parseActionError } from "@/lib/data/safe"
+import { parseActionError } from "@/lib/data/utils"
 
 type ActionStates = {
   [K in (typeof actions)[number]["label"]]: {
@@ -131,24 +131,33 @@ export function ActionsMenu({ user }: { user: User }) {
   })
 
   // Create a dynamic object of action hooks
-  const actionStates = filteredActions.reduce<ActionStates>((acc, action) => {
-    const { execute, isExecuting } = useAction(action.action, {
-      onSuccess() {
-        toast.success(action.successLabel)
-      },
-      onError({ error }) {
-        toast.error(parseActionError(error))
-      },
-    })
+  const actionStates = filteredActions.reduce<ActionStates>(
+    (acc, action) => {
+      const { execute, isExecuting } = useAction(action.action, {
+        onSuccess() {
+          toast.success(action.successLabel)
+        },
+        onError({ error }) {
+          toast.error(parseActionError(error))
+        },
+      })
 
-    return {
-      ...acc,
-      [action.label]: {
-        execute,
-        isExecuting,
-      },
-    }
-  }, {} as Record<(typeof actions)[number]["label"], { execute: (input: { id: string }) => void | Promise<void>; isExecuting: boolean }>)
+      return {
+        ...acc,
+        [action.label]: {
+          execute,
+          isExecuting,
+        },
+      }
+    },
+    {} as Record<
+      (typeof actions)[number]["label"],
+      {
+        execute: (input: { id: string }) => void | Promise<void>
+        isExecuting: boolean
+      }
+    >
+  )
 
   return (
     <DropdownMenu>
