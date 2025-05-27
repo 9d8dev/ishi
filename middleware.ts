@@ -1,15 +1,15 @@
-import { NextRequest, NextResponse } from "next/server"
-import { headers } from "next/headers"
-import { auth } from "@/lib/auth"
+import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 export async function middleware(request: NextRequest) {
   const session = await auth.api.getSession({
     headers: await headers(),
-  })
+  });
 
   // if no session, redirect to sign in
   if (!session) {
-    return NextResponse.redirect(new URL("/sign-in", request.url))
+    return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
   // if no active organization and not already on workspace, redirect to workspace
@@ -19,18 +19,18 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname !== "/workspace" &&
     !request.nextUrl.pathname.startsWith("/invitation")
   ) {
-    return NextResponse.redirect(new URL("/workspace", request.url))
+    return NextResponse.redirect(new URL("/workspace", request.url));
   }
 
   // if user is not admin, redirect to home
   if (request.nextUrl.pathname.startsWith("/admin")) {
-    const isAdmin = session.user.role === "admin"
+    const isAdmin = session.user.role === "admin";
     if (!isAdmin) {
-      return NextResponse.redirect(new URL("/", request.url))
+      return NextResponse.redirect(new URL("/", request.url));
     }
   }
 
-  return NextResponse.next()
+  return NextResponse.next();
 }
 
 export const config = {
@@ -42,4 +42,4 @@ export const config = {
     "/admin/:path*",
     "/invitation/:path*",
   ],
-}
+};

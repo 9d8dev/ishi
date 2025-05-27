@@ -1,5 +1,7 @@
-import { Main, Section, Container } from "@/components/ds"
-import Link from "next/link"
+import { Main, Section, Container } from "@/components/ds";
+
+import Link from "next/link";
+
 export default function Page() {
   return (
     <Main>
@@ -14,5 +16,5 @@ export default function Page() {
         </Container>
       </Section>
     </Main>
-  )
+  );
 }
