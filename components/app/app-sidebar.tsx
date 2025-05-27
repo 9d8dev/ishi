@@ -66,12 +66,12 @@ export const AppSidebar = async () => {
         </SidebarGroup>
 
         <SidebarFooter>
-          {session && <UserInfo user={session.user} />}
           <OrganizationSwitcher
             className="w-full"
             organizations={orgs}
             activeOrganization={session?.session.activeOrganizationId ?? ""}
           />
+          {session && <UserInfo user={session.user} />}
           <SidebarMenuButton asChild className="mt-8">
             <SidebarTrigger className="w-fit" />
           </SidebarMenuButton>
