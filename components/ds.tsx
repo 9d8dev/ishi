@@ -127,7 +127,7 @@ export const Layout = ({ children, className, style }: DSProps) => (
  * @returns {JSX.Element} A main element.
  */
 export const Main = ({ children, className, id, style }: DSProps) => (
-  <main className={cn("", className)} id={id} style={style}>
+  <main className={cn("w-full", className)} id={id} style={style}>
     {children}
   </main>
 );

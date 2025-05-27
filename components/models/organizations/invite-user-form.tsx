@@ -41,10 +41,18 @@ const defaultValues: Partial<values> = {
   organizationId: "",
 }
 
-export function InviteUserForm({ organizationId }: { organizationId: string }) {
+export function InviteUserForm({ 
+  organizationId, 
+  onSuccess 
+}: { 
+  organizationId: string
+  onSuccess?: () => void
+}) {
   const { execute, isExecuting } = useAction(inviteUser, {
     onSuccess() {
       toast.success("User invited successfully")
+      form.reset()
+      onSuccess?.()
     },
     onError({ error }) {
       toast.error(parseActionError(error))

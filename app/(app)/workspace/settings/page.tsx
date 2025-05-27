@@ -1,112 +1,222 @@
-import { Main, Section, Container } from "@/components/ds"
-import { getSession } from "@/lib/auth/server"
-import { getOrganization } from "@/lib/data/organization"
-import { InviteUserForm } from "@/components/models/organizations/invite-user-form"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Users, Clock, Mail, X, Settings } from "lucide-react";
+import { Section, Container } from "@/components/ds";
+import { InviteUserDialog } from "@/components/models/organizations/invite-user-dialog";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { getOrganization } from "@/lib/data/organization";
+import { getSession } from "@/lib/auth/server";
 
 export default async function Page() {
-  const session = await getSession()
+  const session = await getSession();
 
   const organization = await getOrganization(
     session?.session.activeOrganizationId
-  )
-
-  console.log(organization)
+  );
 
   return (
-    <Main>
-      <Section>
-        <Container>
-          <h1 className="font-bold">Workspace Settings</h1>
-          {organization && (
-            <div className="space-y-8">
-              {/* Members Section */}
-              <div className="rounded-lg border bg-card">
-                <div className="flex items-center justify-between border-b p-4">
-                  <h3 className="text-lg font-semibold">
-                    Members ({organization.members.length})
-                  </h3>
-                  <InviteUserForm organizationId={organization.id} />
+    <Section className="py-8">
+      <Container className="max-w-none space-y-8">
+        {organization ? (
+          <>
+            {/* Header */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                  <Settings className="h-6 w-6 text-primary" />
                 </div>
-                <div className="divide-y">
-                  {organization.members.map((member) => (
-                    <div
-                      key={member.id}
-                      className="flex items-center justify-between p-4"
-                    >
-                      <div className="flex items-center gap-3">
-                        {member.user.image ? (
-                          <img
-                            src={member.user.image}
-                            alt={member.user.name}
-                            className="h-10 w-10 rounded-full object-cover"
-                          />
-                        ) : (
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                            <span className="text-lg font-medium text-primary">
+                <div>
+                  <h1 className="text-3xl font-bold tracking-tight">
+                    Workspace Settings
+                  </h1>
+                  <p className="text-muted-foreground">
+                    Manage your organization members and settings
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Organization Details */}
+            <div className="rounded-lg border bg-card p-6">
+              <div className="mb-6">
+                <h2 className="flex items-center gap-2 text-xl font-semibold">
+                  <Users className="h-5 w-5" />
+                  Organization Details
+                </h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Basic information about your organization
+                </p>
+              </div>
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">
+                    Organization Name
+                  </label>
+                  <p className="text-lg font-medium">{organization.name}</p>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">
+                    Created
+                  </label>
+                  <p className="text-lg font-medium">
+                    {new Date(organization.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">
+                    Total Members
+                  </label>
+                  <p className="text-lg font-medium">
+                    {organization.members.length}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Team Members */}
+            <div className="rounded-lg border bg-card">
+              <div className="flex items-start justify-between border-b p-6">
+                <div>
+                  <h2 className="flex items-center gap-2 text-xl font-semibold">
+                    <Users className="h-5 w-5" />
+                    Team Members
+                    <Badge variant="secondary" className="ml-2">
+                      {organization.members.length}
+                    </Badge>
+                  </h2>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Manage who has access to this workspace
+                  </p>
+                </div>
+                <InviteUserDialog organizationId={organization.id} />
+              </div>
+              <div className="p-6">
+                <div className="space-y-4">
+                  {organization.members.map((member, index) => (
+                    <div key={member.id}>
+                      <div className="flex items-center justify-between py-4">
+                        <div className="flex items-center gap-4">
+                          <Avatar className="h-12 w-12">
+                            <AvatarImage
+                              src={member.user.image || ""}
+                              alt={member.user.name}
+                            />
+                            <AvatarFallback className="bg-primary/10 text-primary font-semibold">
                               {member.user.name?.[0]?.toUpperCase()}
-                            </span>
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="space-y-1">
+                            <p className="font-semibold leading-none">
+                              {member.user.name}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              {member.user.email}
+                            </p>
                           </div>
-                        )}
-                        <div>
-                          <p className="font-medium">{member.user.name}</p>
-                          <p className="text-sm text-muted-foreground">
-                            {member.user.email}
-                          </p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <Badge variant="outline" className="capitalize">
+                            {member.role}
+                          </Badge>
+                          <div className="text-right">
+                            <p className="text-sm text-muted-foreground">
+                              Joined
+                            </p>
+                            <p className="text-sm font-medium">
+                              {new Date(member.createdAt).toLocaleDateString()}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4">
-                        <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
-                          {member.role}
-                        </span>
-                        <span className="text-sm text-muted-foreground">
-                          {new Date(member.createdAt).toLocaleDateString()}
-                        </span>
-                      </div>
+                      {index < organization.members.length - 1 && <Separator />}
                     </div>
                   ))}
                 </div>
               </div>
+            </div>
 
-              {/* Invitations Section */}
-              {organization.invitations.length > 0 && (
-                <div className="rounded-lg border bg-card">
-                  <div className="border-b p-4">
-                    <h3 className="text-lg font-semibold">
-                      Invitations ({organization.invitations.length})
-                    </h3>
-                  </div>
-                  <div className="divide-y">
-                    {organization.invitations.map((invitation) => (
-                      <div
-                        key={invitation.id}
-                        className="flex items-center justify-between p-4"
-                      >
-                        <div>
-                          <p className="font-medium">{invitation.email}</p>
-                          <p className="text-sm text-muted-foreground">
-                            Status: {invitation.status}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            Expires{" "}
-                            {new Date(
-                              invitation.expiresAt
-                            ).toLocaleDateString()}
-                          </p>
+            {/* Invitations Section */}
+            {organization.invitations.length > 0 && (
+              <div className="rounded-lg border bg-card">
+                <div className="border-b p-6">
+                  <h2 className="flex items-center gap-2 text-xl font-semibold">
+                    <Mail className="h-5 w-5" />
+                    Pending Invitations
+                    <Badge variant="secondary" className="ml-2">
+                      {organization.invitations.length}
+                    </Badge>
+                  </h2>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Invitations waiting for response
+                  </p>
+                </div>
+                <div className="p-6">
+                  <div className="space-y-4">
+                    {organization.invitations.map((invitation, index) => (
+                      <div key={invitation.id}>
+                        <div className="flex items-center justify-between py-4">
+                          <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+                              <Mail className="h-5 w-5 text-muted-foreground" />
+                            </div>
+                            <div className="space-y-1">
+                              <p className="font-semibold leading-none">
+                                {invitation.email}
+                              </p>
+                              <div className="flex items-center gap-2">
+                                <Badge
+                                  variant={
+                                    invitation.status === "pending"
+                                      ? "outline"
+                                      : "secondary"
+                                  }
+                                  className="text-xs"
+                                >
+                                  {invitation.status}
+                                </Badge>
+                                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                                  <Clock className="h-3 w-3" />
+                                  Expires{" "}
+                                  {new Date(
+                                    invitation.expiresAt
+                                  ).toLocaleDateString()}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {invitation.status === "pending" && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-destructive hover:text-destructive"
+                            >
+                              <X className="h-4 w-4 mr-1" />
+                              Cancel
+                            </Button>
+                          )}
                         </div>
-                        {invitation.status === "pending" && (
-                          <button className="text-sm text-destructive hover:underline">
-                            Cancel Invitation
-                          </button>
+                        {index < organization.invitations.length - 1 && (
+                          <Separator />
                         )}
                       </div>
                     ))}
                   </div>
                 </div>
-              )}
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="rounded-lg border bg-card p-12">
+            <div className="text-center space-y-2">
+              <p className="text-muted-foreground">No organization found</p>
+              <p className="text-sm text-muted-foreground">
+                Please contact support if this seems incorrect
+              </p>
             </div>
-          )}
-        </Container>
-      </Section>
-    </Main>
-  )
+          </div>
+        )}
+      </Container>
+    </Section>
+  );
 }
