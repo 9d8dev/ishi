@@ -38,15 +38,13 @@ export function SignOutIconButton({ className }: { className?: string }) {
     },
   });
   return (
-    <Button
-      size="icon"
-      variant="outline"
+    <button
       disabled={isExecuting}
       onClick={() => execute()}
       className={className}
     >
       <span className="sr-only">Sign Out</span>
-      <LogOut />
-    </Button>
+      <LogOut size={16} />
+    </button>
   );
 }

@@ -9,7 +9,7 @@ export const UserInfo = ({ user }: { user: User }) => {
       <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2">
         <User2 size={16} className="text-muted-foreground" />
         <span className="truncate">{user.name}</span>
-        <SignOutIconButton className="size-8" />
+        <SignOutIconButton className="cursor-pointer" />
       </div>
     </div>
   );

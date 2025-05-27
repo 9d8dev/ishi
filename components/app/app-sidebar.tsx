@@ -43,8 +43,8 @@ export const AppSidebar = async () => {
   return (
     <Sidebar>
       <SidebarContent className="grid grid-rows-[auto_1fr_auto]">
-        <SidebarHeader className="w-full pt-4 group-data-[collapsible=icon]:h-0">
-          <Logo className="group-data-[collapsible=icon]:hidden" />
+        <SidebarHeader className="w-full group-data-[collapsible=icon]:p-0">
+          <Logo className="px-2 group-data-[collapsible=icon]:hidden" />
         </SidebarHeader>
 
         <SidebarGroup>
