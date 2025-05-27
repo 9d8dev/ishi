@@ -1,17 +1,18 @@
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
   SidebarMenuButton,
+  SidebarGroupLabel,
   SidebarMenuItem,
+  SidebarContent,
+  SidebarTrigger,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarMenu,
+  Sidebar,
 } from "@/components/ui/sidebar";
 
-// Menu items.
 const items = [
   {
     title: "Home",
@@ -43,7 +44,7 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarContent>
+      <SidebarContent className="flex flex-col justify-between items-start">
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -61,6 +62,11 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        <SidebarFooter>
+          <SidebarMenuButton asChild>
+            <SidebarTrigger />
+          </SidebarMenuButton>
+        </SidebarFooter>
       </SidebarContent>
     </Sidebar>
   );
