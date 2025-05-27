@@ -1,8 +1,9 @@
+import { Users, Building, Home } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Nav } from "@/components/ds";
 import { Logo } from "@/components/site/logo";
+
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Users, Building, Home } from "lucide-react";
 
 export default function AdminLayout({
   children,
@@ -23,13 +24,19 @@ export default function AdminLayout({
                 </Link>
               </Button>
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/admin/users" className="flex items-center space-x-2">
+                <Link
+                  href="/admin/users"
+                  className="flex items-center space-x-2"
+                >
                   <Users className="h-4 w-4" />
                   <span>Users</span>
                 </Link>
               </Button>
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/admin/organizations" className="flex items-center space-x-2">
+                <Link
+                  href="/admin/organizations"
+                  className="flex items-center space-x-2"
+                >
                   <Building className="h-4 w-4" />
                   <span>Organizations</span>
                 </Link>
