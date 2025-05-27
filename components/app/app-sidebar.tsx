@@ -43,8 +43,8 @@ export const AppSidebar = async () => {
   return (
     <Sidebar>
       <SidebarContent className="grid grid-rows-[auto_1fr_auto]">
-        <SidebarHeader className="w-full pt-4">
-          <Logo />
+        <SidebarHeader className="w-full pt-4 group-data-[collapsible=icon]:h-0">
+          <Logo className="group-data-[collapsible=icon]:hidden" />
         </SidebarHeader>
 
         <SidebarGroup>
@@ -67,7 +67,7 @@ export const AppSidebar = async () => {
 
         <SidebarFooter>
           <OrganizationSwitcher
-            className="w-full"
+            className="w-full group-data-[collapsible=icon]:hidden"
             organizations={orgs}
             activeOrganization={session?.session.activeOrganizationId ?? ""}
           />
