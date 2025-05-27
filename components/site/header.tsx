@@ -1,4 +1,4 @@
-import { SignOut } from "@/components/auth/signout";
+import { SignOutButton } from "@/components/auth/signout";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/site/logo";
 import { Nav } from "@/components/ds";
@@ -28,10 +28,10 @@ export const Header = async () => {
           </>
         ) : (
           <>
-            <Button variant="outline" asChild>
-              <Link href="/admin">Admin</Link>
+            <SignOutButton />
+            <Button asChild>
+              <Link href="/workspace">Workspace</Link>
             </Button>
-            <SignOut />
           </>
         )}
       </div>

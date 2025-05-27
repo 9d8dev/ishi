@@ -21,6 +21,7 @@ export function SignOutButton({ className }: { className?: string }) {
       className={className}
       disabled={isExecuting}
       onClick={() => execute()}
+      variant="outline"
     >
       Sign Out
     </Button>
